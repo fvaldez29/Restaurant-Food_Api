@@ -1,0 +1,40 @@
+{
+  "name": "food-api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch server.js"
+  },
+  "author": "Franklyn Valdez Mateo",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fvaldez29/Food-APIs.git"
+  },
+  "dependencies": {
+    "@libsql/client": "^0.14.0",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "ejs": "3.1.10",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongodb": "^6.10.0",
+    "mongoose": "^8.8.1",
+    "morgan": "^1.10.0",
+    "standard": "^17.1.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/fvaldez29/Food-APIs/issues"
+  },
+  "homepage": "https://github.com/fvaldez29/Food-APIs#readme",
+  "description": ""
+}

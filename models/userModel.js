@@ -2,10 +2,10 @@ import mongoose from "mongoose";
 
 //schema
 const userSchame = new mongoose.Schema({
-    userName:{
+    userName: {
         type: String,
         required: [true, 'Username is required']
-    }, 
+    },
     email: {
         type: String,
         required: [true, 'Email is required']
@@ -21,20 +21,20 @@ const userSchame = new mongoose.Schema({
         type: String,
         required: [true, 'Phone number is require']
     },
-    userType:{
+    userType: {
         type: String,
         required: [true, 'user type is required'],
+        enum: ['client', 'admin', 'vendor', 'driver'],
         default: 'client',
-        enum: ['client', 'admin', 'vendor', 'driver']
     },
-    profile:{
-        type:String,
+    profile: {
+        type: String,
         default: 'https://img.freepik.com/premium-vector/avatar-icon0002_750950-43.jpg?semt=ais_hybrid'
     },
     answer: {
         type: String,
         required: [true, 'Answer required']
     }
-}, {timestamps: true})
+}, { timestamps: true })
 
 export const User = mongoose.model('User', userSchame);

@@ -1,4 +1,5 @@
 import { food } from "../models/foodModel.js"
+import { Order } from "../models/orderModel.js"
 
 
 export const addNewFoodController = async (req, res) => {
@@ -144,7 +145,7 @@ export const getFoodByRestaurant = async (req, res) => {
 export const updateFoodController = async (req, res) => {
     try {
         const foodId = req.params.id
-        if(!foodId){
+        if (!foodId) {
             return res.status(404).send({
                 success: false,
                 message: 'No Food Id was Found'
@@ -154,8 +155,8 @@ export const updateFoodController = async (req, res) => {
 
         const updates = req.body
 
-        const foodUpdate = await food.findByIdAndUpdate(foodId, updates, {new: true})
-        if(!foodUpdate){
+        const foodUpdate = await food.findByIdAndUpdate(foodId, updates, { new: true })
+        if (!foodUpdate) {
             return res.status(500).send({
                 success: false,
                 message: 'Error in updated food'
@@ -179,7 +180,7 @@ export const updateFoodController = async (req, res) => {
 export const deleteFoodController = async (req, res) => {
     try {
         const id = req.params.id
-        if(!id){
+        if (!id) {
             return res.status(500).send({
                 success: false,
                 message: 'Id Not Found'
@@ -188,7 +189,7 @@ export const deleteFoodController = async (req, res) => {
 
         const deleteFood = await food.findByIdAndDelete(id)
 
-        if(!deleteFood){
+        if (!deleteFood) {
             return res.status(500).send({
                 success: false,
                 message: 'Error in deleted Food API'
@@ -208,3 +209,61 @@ export const deleteFoodController = async (req, res) => {
         })
     }
 }
+// PLACE ORDER
+export const placeOrderController = async (req, res) => {
+    try {
+      const { cart } = req.body;
+      if (!cart) {
+        return res.status(500).send({
+          success: false,
+          message: "please food cart or payemnt method",
+        });
+      }
+      let total = 0;
+      //cal
+      cart.map((i) => {
+        total += i.price;
+      });
+  
+      const newOrder = new Order({
+        foods: cart,
+        payment: total,
+        buyer: req.body.id,
+      });
+      await newOrder.save();
+      res.status(201).send({
+        success: true,
+        message: "Order Placed successfully",
+        newOrder,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        success: false,
+        message: "Erorr In Place Order API",
+        error,
+      });
+    }
+  };
+
+
+  export const orderStatusController = async (req, res) => {
+    try {
+        const orderId = req.params.id
+        if(!orderId){
+            return res.status(404).send({
+                success: true,
+                message: 'Order Id not'
+            })
+        }
+        const { status } = req.body
+        const order = await Order.findByIdAndUpdate(orderId, {status}, {new: true})
+        res.status(200).send({
+            success: true,
+            message: 'Order Status Updated'
+        })
+    } catch (error) {
+        console.log(error)
+
+    }
+  }

@@ -1,6 +1,7 @@
 import express from 'express'
 import authMiddleware from '../middlewares/authMiddleware.js'
-import { addNewFoodController, deleteFoodController, getAllFoodController, getFoodByIdController, getFoodByRestaurant, updateFoodController } from '../controllers/foodController.js'
+import { addNewFoodController, deleteFoodController, getAllFoodController, getFoodByIdController, getFoodByRestaurant, orderStatusController, placeOrderController, updateFoodController } from '../controllers/foodController.js'
+import adminMiddleware from '../middlewares/adminMiddleware.js'
 
 const foodRoutes = express.Router()
 
@@ -22,5 +23,11 @@ foodRoutes.put('/update/:id', authMiddleware, updateFoodController)
 
 //? DELETE FOOD
 foodRoutes.delete('/delete/:id', authMiddleware, deleteFoodController)
+
+// ORDER FOOD
+foodRoutes.post('/order', authMiddleware, placeOrderController)
+
+// ORDER STATUS
+foodRoutes.post('/orderStatus/:id', authMiddleware, adminMiddleware, orderStatusController);
 
 export default foodRoutes
